@@ -77,9 +77,9 @@ const ImportExcelView: React.FC = () => {
 
       console.log("Import thành công:", res.data);
       alert(`Đã import sheet "${selectedSheet}" thành công.`);
-    } catch (err) {
-      console.error("Lỗi khi import sheet:", err);
-      alert("Lỗi khi import sheet. Vui lòng thử lại.");
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.error || "Lỗi không xác định";
+      alert(` ${errorMessage}`)
     }
   };
 
