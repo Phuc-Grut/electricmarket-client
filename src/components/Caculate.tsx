@@ -30,13 +30,25 @@ const Caculate = ({ onSuccess }: CaculateProps) => {
     }
   };
 
+  const handleCaculateCFMP = async () => {
+    try {
+      await axios.post("https://localhost:7028/api/excel/calculate-PM(CFMP)");
+      alert("Tính CFMP thành công!");
+      onSuccess();
+    } catch (err: any) {
+      console.error(" Lỗi khi tính CFMP:", err);
+      const errorMessage = err.response?.data?.error || "Lỗi không xác định";
+      alert(` ${errorMessage}`);
+    }
+  };
+
   return (
     <Box sx={{ p: 2 }}>
       <Stack direction="row" spacing={4} justifyContent={"center"}>
         {/* Ô tính FMP */}
         <Paper
           elevation={3}
-          sx={{ p: 3, maxWidth: "50%", textAlign: "center" }}
+          sx={{ p: 3, maxWidth: "30%", textAlign: "center" }}
         >
           <Typography variant="h6" gutterBottom>
             Tính FMP
@@ -56,7 +68,7 @@ const Caculate = ({ onSuccess }: CaculateProps) => {
         {/* Ô tính Pm */}
         <Paper
           elevation={3}
-          sx={{ p: 3, maxWidth: "50%", textAlign: "center" }}
+          sx={{ p: 3, maxWidth: "30%", textAlign: "center" }}
         >
           <Typography variant="h6" gutterBottom>
             Tính Pm
@@ -69,6 +81,26 @@ const Caculate = ({ onSuccess }: CaculateProps) => {
             color="secondary"
             onClick={handleCaculatePm}
             sx={{ mt: 1 }}
+          >
+            Caculate
+          </Button>
+        </Paper>
+
+        <Paper
+          elevation={3}
+          sx={{ p: 3, maxWidth: "30%", textAlign: "center" }}
+        >
+          <Typography variant="h6" gutterBottom>
+            Tính Pm=CFMP
+          </Typography>
+          <Typography variant="caption" gutterBottom display="block">
+            Pm=CFMP=FMP*k
+          </Typography>
+          <Button
+            variant="contained"
+            color="warning"
+            onClick={handleCaculateCFMP}
+            sx={{ mt: 1 }}  
           >
             Caculate
           </Button>
