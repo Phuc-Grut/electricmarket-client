@@ -18,7 +18,7 @@ const ImportExcelView: React.FC = () => {
   const [headerRow, setHeaderRow] = useState<number>();
   const [startRow, setStartRow] = useState<number>();
   const [tableName, setTableName] = useState<string>("");
-  // const [endRow, setEndRow] = useState<number>();
+  const [endRow, setEndRow] = useState<number>();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -66,14 +66,14 @@ const ImportExcelView: React.FC = () => {
           selectedSheet
         )}&headerRow=${headerRow}&startRow=${startRow}&sheetName=${encodeURIComponent(
           tableName
-        )}`,
+        )}${endRow ? `&endRow=${endRow}` : ""}`,
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         }
-      );
+      );      
 
       console.log("Import thành công:", res.data);
       alert(`Đã import sheet "${selectedSheet}" thành công.`);
@@ -156,13 +156,13 @@ const ImportExcelView: React.FC = () => {
                 placeholder="Dòng bắt đầu (VD: 6)"
                 fullWidth
               />
-              {/* <Input
+              <Input
                 type="number"
                 value={endRow}
                 onChange={(e) => setEndRow(Number(e.target.value))}
                 placeholder="Dòng kết thúc (tuỳ chọn)"
                 fullWidth
-              /> */}
+              />
             </Box>
           </Box>
         )}

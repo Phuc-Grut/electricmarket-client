@@ -5,7 +5,6 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Typography,
   Table,
   TableBody,
   TableCell,
@@ -18,7 +17,7 @@ import {
 import axios from "axios";
  
 interface TableViewerProps {
-    reloadKey: number;
+    reloadKey?: number;
   }
 
 const TableViewer = ({reloadKey} : TableViewerProps) => {
