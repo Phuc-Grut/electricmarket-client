@@ -9,7 +9,7 @@ import {
   Select,
 } from "@mui/material";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const ImportExcelView: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -19,6 +19,25 @@ const ImportExcelView: React.FC = () => {
   const [startRow, setStartRow] = useState<number>();
   const [tableName, setTableName] = useState<string>("");
   const [endRow, setEndRow] = useState<number>();
+
+  const [availableTables, setAvailableTables] = useState<string[]>([]);
+  const [selectedTable, setSelectedTable] = useState<string>("");
+
+  const fetchTables = async () => {
+    try {
+      const res = await axios.get<string[]>(
+        "https://localhost:7028/api/excel/tables"
+      );
+      setAvailableTables(res.data);
+      setSelectedTable(res.data[0] || "");
+    } catch (err) {
+      console.error("Lỗi khi lấy danh sách bảng:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchTables();
+  }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -73,13 +92,14 @@ const ImportExcelView: React.FC = () => {
             "Content-Type": "multipart/form-data",
           },
         }
-      );      
+      );
 
       console.log("Import thành công:", res.data);
+      fetchTables();
       alert(`Đã import sheet "${selectedSheet}" thành công.`);
     } catch (err: any) {
       const errorMessage = err.response?.data?.error || "Lỗi không xác định";
-      alert(` ${errorMessage}`)
+      alert(` ${errorMessage}`);
     }
   };
 
@@ -88,7 +108,34 @@ const ImportExcelView: React.FC = () => {
       maxWidth="sm"
       sx={{ mt: 5, p: 4, bgcolor: "#fafafa", borderRadius: 2, boxShadow: 2 }}
     >
-      <Typography variant="h5" mb={3}>
+      {availableTables.length > 0 && (
+        <Box>
+          <Typography variant="subtitle1" mb={1}>
+            Các bảng đã import
+          </Typography>
+          <Select
+            fullWidth
+            value={selectedTable}
+            onChange={(e) => setSelectedTable(e.target.value)}
+            MenuProps={{
+              PaperProps: {
+                style: {
+                  maxHeight: "50vh",
+                  overflowY: "auto",
+                },
+              },
+            }}
+          >
+            {availableTables.map((name) => (
+              <MenuItem key={name} value={name}>
+                {name}
+              </MenuItem>
+            ))}
+          </Select>
+        </Box>
+      )}
+
+      <Typography variant="h5" mb={3} mt={3}>
         Import Excel File
       </Typography>
 

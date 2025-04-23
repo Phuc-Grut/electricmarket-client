@@ -7,36 +7,15 @@ interface CaculateProps {
 }
 
 const Calculate2 = ({ onSuccess }: CaculateProps) => {
-  const handleCaculateFmp = async () => {
+  const handleCaculateCCFD = async (type: string) => {
     try {
-      await axios.post("https://localhost:7028/api/excel/caculate-fmp");
-      alert("Tính FMP thành công!");
+      await axios.post(
+        `https://localhost:7028/api/excel/caculate-ccfd/${type}`
+      );
       onSuccess();
+      alert("Tính CCFD thành công!");
     } catch (err: any) {
-      const errorMessage = err.response?.data?.error || "Lỗi không xác định";
-      alert(` ${errorMessage}`);
-    }
-  };
-
-  const handleCaculatePm = async () => {
-    try {
-      await axios.post("https://localhost:7028/api/excel/calculate-pm");
-      alert("Tính Pm thành công!");
-      onSuccess();
-    } catch (err: any) {
-      console.error(" Lỗi khi tính Pm:", err);
-      const errorMessage = err.response?.data?.error || "Lỗi không xác định";
-      alert(` ${errorMessage}`);
-    }
-  };
-
-  const handleCaculateCFMP = async () => {
-    try {
-      await axios.post("https://localhost:7028/api/excel/calculate-PM(CFMP)");
-      alert("Tính CFMP thành công!");
-      onSuccess();
-    } catch (err: any) {
-      console.error(" Lỗi khi tính CFMP:", err);
+      console.error("Lỗi khi gọi API:", err);
       const errorMessage = err.response?.data?.error || "Lỗi không xác định";
       alert(` ${errorMessage}`);
     }
@@ -51,14 +30,14 @@ const Calculate2 = ({ onSuccess }: CaculateProps) => {
           sx={{ p: 3, maxWidth: "30%", textAlign: "center" }}
         >
           <Typography variant="h6" gutterBottom>
-            Tính FMP
+            Tính CCFD-PM1
           </Typography>
           <Typography variant="caption" gutterBottom display="block">
-            GIÁ THỊ TRƯỜNG TOÀN PHẦN : FMP = SMP + CAN
+            CCFD = QC x (PC - FMP) / 1000
           </Typography>
           <Button
             variant="contained"
-            onClick={handleCaculateFmp}
+            onClick={() => handleCaculateCCFD("pm1")}
             sx={{ mt: 1 }}
           >
             Caculate
@@ -71,15 +50,15 @@ const Calculate2 = ({ onSuccess }: CaculateProps) => {
           sx={{ p: 3, maxWidth: "30%", textAlign: "center" }}
         >
           <Typography variant="h6" gutterBottom>
-            Tính Pm
+            Tính CCFD-PM4
           </Typography>
           <Typography variant="caption" gutterBottom display="block">
-            FMP = Giá thị trường toàn phần (FMP) - Giá A0 công bố (FMP)
+            CCFD = QC x (PC - FMP) / 1000
           </Typography>
           <Button
             variant="contained"
             color="secondary"
-            onClick={handleCaculatePm}
+            onClick={() => handleCaculateCCFD("pm4")}
             sx={{ mt: 1 }}
           >
             Caculate
@@ -91,16 +70,56 @@ const Calculate2 = ({ onSuccess }: CaculateProps) => {
           sx={{ p: 3, maxWidth: "30%", textAlign: "center" }}
         >
           <Typography variant="h6" gutterBottom>
-            Tính Pm=CFMP
+            Tính CCFD-TB1
           </Typography>
           <Typography variant="caption" gutterBottom display="block">
-            Pm=CFMP=FMP*k
+            CCFD = QC x (PC - FMP) / 1000
           </Typography>
           <Button
             variant="contained"
             color="warning"
-            onClick={handleCaculateCFMP}
-            sx={{ mt: 1 }}  
+            onClick={() => handleCaculateCCFD("tb1")}
+            sx={{ mt: 1 }}
+          >
+            Caculate
+          </Button>
+        </Paper>
+
+        <Paper
+          elevation={3}
+          sx={{ p: 3, maxWidth: "30%", textAlign: "center" }}
+        >
+          <Typography variant="h6" gutterBottom>
+            Tính CCFD-VT4
+          </Typography>
+          <Typography variant="caption" gutterBottom display="block">
+            CCFD = QC x (PC - FMP) / 1000
+          </Typography>
+          <Button
+            variant="contained"
+            color="warning"
+            onClick={() => handleCaculateCCFD("vt4")}
+            sx={{ mt: 1 }}
+          >
+            Caculate
+          </Button>
+        </Paper>
+
+        <Paper
+          elevation={3}
+          sx={{ p: 3, maxWidth: "30%", textAlign: "center" }}
+        >
+          <Typography variant="h6" gutterBottom>
+            Tính CCFD-DH3
+          </Typography>
+          <Typography variant="caption" gutterBottom display="block">
+            CCFD = QC x (PC - FMP) / 1000
+          </Typography>
+          <Button
+            variant="contained"
+            color="warning"
+            onClick={() => handleCaculateCCFD("dh3")}
+            sx={{ mt: 1 }}
           >
             Caculate
           </Button>
