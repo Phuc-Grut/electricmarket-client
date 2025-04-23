@@ -90,7 +90,7 @@ const Calculate2 = ({ onSuccess }: CaculateProps) => {
           sx={{ p: 3, maxWidth: "30%", textAlign: "center" }}
         >
           <Typography variant="h6" gutterBottom>
-            Tính CCFD-VT4
+            Tính CCFD-VT4&MR
           </Typography>
           <Typography variant="caption" gutterBottom display="block">
             CCFD = QC x (PC - FMP) / 1000
@@ -98,7 +98,7 @@ const Calculate2 = ({ onSuccess }: CaculateProps) => {
           <Button
             variant="contained"
             color="warning"
-            onClick={() => handleCaculateCCFD("vt4")}
+            onClick={() => handleCaculateCCFD("vt4&mr")}
             sx={{ mt: 1 }}
           >
             Caculate
