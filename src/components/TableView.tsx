@@ -30,7 +30,10 @@ const TableViewer = ({reloadKey} : TableViewerProps) => {
   useEffect(() => {
     axios
       .get<string[]>("https://localhost:7028/api/excel/tables")
-      .then((res) => setTables(res.data))
+      .then((res) => {
+        const sortedTables = res.data.sort((a, b) => a.localeCompare(b));
+        setTables(sortedTables);
+      })      
       .catch((err) => console.error("Lỗi khi lấy danh sách bảng:", err));
   }, [reloadKey]);
 
@@ -53,7 +56,7 @@ const TableViewer = ({reloadKey} : TableViewerProps) => {
   return (
     <Container sx={{ mt: 4 }}>
 
-      <FormControl sx={{ mb: 3, width: "50%" }}>
+      <FormControl sx={{ mb: 3, width: "80%" }}>
         <InputLabel>Chọn bảng</InputLabel>
         <Select
           value={selectedTable}
@@ -75,7 +78,7 @@ const TableViewer = ({reloadKey} : TableViewerProps) => {
           <TableContainer
             component={Paper}
             sx={{
-              maxHeight: 500, // Giới hạn chiều cao bảng
+              maxHeight: 700, // Giới hạn chiều cao bảng
               overflow: "auto", // Cho phép cuộn khi vượt quá
             }}
           >
