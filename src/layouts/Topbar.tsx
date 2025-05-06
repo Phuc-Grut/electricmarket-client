@@ -21,6 +21,12 @@ const Topbar = () => {
       >
         File 5
       </Link>
+      <Link
+        to="/file4"
+        style={{ marginRight: "20px", color: "white", textDecoration: "none" }}
+      >
+        File 4
+      </Link>
     </nav>
   );
 };
