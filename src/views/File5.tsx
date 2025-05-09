@@ -4,11 +4,11 @@ import { useState } from "react";
 import Calculate2 from "../components/Calculate2";
 
 const File5 = () => {
-      const [reloadKey, setReloadKey] = useState(0);
-    
-      const handleReload = () => {
-        setReloadKey((prev) => prev + 1);
-      };
+  const [reloadKey, setReloadKey] = useState(0);
+
+  const handleReload = () => {
+    setReloadKey((prev) => prev + 1);
+  };
   return (
     <Box sx={{ p: 4 }}>
       {/* Phần tính toán */}

@@ -3,11 +3,11 @@ import TableViewer from "../components/TableView";
 import { useState } from "react";
 
 const File4 = () => {
-      const [reloadKey, setReloadKey] = useState(0);
-    
-      const handleReload = () => {
-        setReloadKey((prev) => prev + 1);
-      };
+  const [reloadKey, setReloadKey] = useState(0);
+
+  const handleReload = () => {
+    setReloadKey((prev) => prev + 1);
+  };
   return (
     <Box sx={{ p: 4 }}>
       {/* Phần tính toán */}
